@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 
-class EditExpense extends Component {
-  render() {
-    return <p>Edit</p>
-  }
+const EditExpense = props => {
+  return <p>Edit expense {props.match.params.id}</p>
 }
 
 export default EditExpense
