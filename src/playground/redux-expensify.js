@@ -56,6 +56,40 @@ const expensesReducer = (state = expensesState, action) => {
   }
 }
 
+// FILTERS
+
+const sortByDate = () => ({
+  type: 'SORT_BY_DATE'
+})
+
+const sortByAmount = () => ({
+  type: 'SORT_BY_AMOUNT'
+})
+
+const setStartDate = date => ({
+  type: 'SET_START_DATE',
+  date
+})
+
+const setEndDate = date => ({
+  type: 'SET_END_DATE',
+  date
+})
+
+const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
+  return expenses.filter(expense => {
+    const startDateMatch =
+      typeof startDate !== 'number' || expense.createdAt >= startDate
+    const endDateMatch =
+      typeof endDate !== 'number' || expense.createdAt <= endDate
+    const textMatch = expense.description
+      .toLowerCase()
+      .includes(text.toLowerCase())
+
+    return startDateMatch && endDateMatch && textMatch
+  })
+}
+
 const filtersState = {
   text: '',
   sortBy: 'date', // date or amount
@@ -71,6 +105,26 @@ const filtersReducer = (state = filtersState, action) => {
         ...state,
         text: action.text
       }
+    case 'SORT_BY_DATE':
+      return {
+        ...state,
+        sortBy: 'date'
+      }
+    case 'SORT_BY_AMOUNT':
+      return {
+        ...state,
+        sortBy: 'amount'
+      }
+    case 'SET_START_DATE':
+      return {
+        ...state,
+        startDate: action.date
+      }
+    case 'SET_END_DATE':
+      return {
+        ...state,
+        endDate: action.date
+      }
     default:
       return state
   }
@@ -85,19 +139,30 @@ const store = createStore(
 )
 
 store.subscribe(() => {
-  console.log(store.getState())
+  const state = store.getState()
+  const visibleExpenses = getVisibleExpenses(state.expenses, state.filters)
+  console.log(visibleExpenses)
 })
 
 const expenseOne = store.dispatch(
-  addExpense({ description: 'Udemy course', amount: 10000 })
+  addExpense({ description: 'Udemy course', amount: 10000, createdAt: 1000 })
 )
 
 const expenseTwo = store.dispatch(
-  addExpense({ description: 'Pizza', amount: 14000 })
+  addExpense({ description: 'Pizza', amount: 14000, createdAt: -1000 })
 )
 
-store.dispatch(removeExpense({ id: expenseOne.expense.id }))
+// store.dispatch(removeExpense({ id: expenseOne.expense.id }))
 
-store.dispatch(editExpense(expenseTwo.expense.id, { amount: 10000 }))
+// store.dispatch(editExpense(expenseTwo.expense.id, { amount: 10000 }))
 
-store.dispatch(setTextFilter('rent'))
+// store.dispatch(setTextFilter('rent'))
+
+// store.dispatch(sortByAmount())
+
+// store.dispatch(sortByDate())
+
+// store.dispatch(setStartDate(0))
+// store.dispatch(setStartDate())
+// store.dispatch(setEndDate(1250))
+store.dispatch(setTextFilter('course'))
