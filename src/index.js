@@ -13,10 +13,11 @@ import AppRouter from './routers/AppRouter'
 
 const store = configureStore()
 
-// store.dispatch(setTextFilter('water'))
+store.dispatch(setTextFilter('water'))
 
 store.dispatch(addExpense({ description: 'Water Bill', amount: 14000, createdAt: -1000 }))
 store.dispatch(addExpense({ description: 'Electric Bill', amount: 12000, createdAt: -1000 }))
+store.dispatch(addExpense({ description: 'Rent', amount: 20000, createdAt: 1000 }))
 
 const state = store.getState()
 
