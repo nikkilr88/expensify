@@ -4,12 +4,17 @@ import { SingleDatePicker } from 'react-dates'
 import 'react-dates/lib/css/_datepicker.css'
 
 class ExpenseForm extends Component {
-  state = {
-    description: '',
-    amount: '',
-    note: '',
-    createdAt: moment(),
-    focused: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      description: props.expense ? props.expense.description : '',
+      amount: props.expense
+        ? (props.expense.amount / 100).toString() + '.00'
+        : '',
+      note: props.expense ? props.expense.note : '',
+      createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
+      focused: false
+    }
   }
 
   onChange = e => {
@@ -63,9 +68,7 @@ class ExpenseForm extends Component {
   render() {
     return (
       <div>
-        {this.state.error && (
-          <span className='error'>{this.state.error}</span>
-        )}
+        {this.state.error && <span className='error'>{this.state.error}</span>}
         <form onSubmit={this.onSubmit}>
           <input
             name='description'
