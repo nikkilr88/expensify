@@ -6,7 +6,7 @@ export default [
     description: 'rent',
     amount: 150000,
     note: '',
-    createdAt: moment(0)
+    createdAt: moment(0).valueOf()
   },
   {
     id: '2',
