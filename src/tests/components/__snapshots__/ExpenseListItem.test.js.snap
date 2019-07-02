@@ -13,6 +13,7 @@ exports[`should render ExpenseListItem with expense data 1`] = `
   <p>
     150000
      - 
+    0
   </p>
 </div>
 `;
