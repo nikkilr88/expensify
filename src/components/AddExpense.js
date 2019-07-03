@@ -5,7 +5,7 @@ import { addExpense } from '../actions/expenses'
 
 export class AddExpense extends Component {
   onSubmit = expense => {
-    this.props.onSubmit(expense)
+    this.props.addExpense(expense)
     this.props.history.push('/dashboard')
   }
 
@@ -20,7 +20,7 @@ export class AddExpense extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: expense => dispatch(addExpense(expense))
+  addExpense: expense => dispatch(addExpense(expense))
 })
 
 export default connect(
