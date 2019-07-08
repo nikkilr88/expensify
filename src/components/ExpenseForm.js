@@ -8,7 +8,7 @@ class ExpenseForm extends Component {
     this.state = {
       description: props.expense ? props.expense.description : '',
       amount: props.expense
-        ? (props.expense.amount / 100).toString() + '.00'
+        ? (props.expense.amount / 100).toFixed(2).toString()
         : '',
       note: props.expense ? props.expense.note : '',
       createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
