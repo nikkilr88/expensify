@@ -1,6 +1,9 @@
 import moment from 'moment'
 
-const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
+export const getVisibleExpenses = (
+  expenses,
+  { text, sortBy, startDate, endDate }
+) => {
   return expenses
     .filter(expense => {
       const createdAtMoment = expense.createdAt
@@ -27,4 +30,6 @@ const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
     })
 }
 
-export default getVisibleExpenses
+export const getExpensesTotal = (expenses = []) => {
+  return expenses.reduce((accu, curr) => (accu += curr.amount), 0)
+}
