@@ -6,6 +6,7 @@ exports[`should render NotFound component correctly 1`] = `
     this is the dashboard
   </p>
   <Connect(ExpenseListFilters) />
+  <Connect(ExpensesSummary) />
   <Connect(ExpenseList) />
 </div>
 `;

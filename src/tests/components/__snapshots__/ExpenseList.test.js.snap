@@ -29,10 +29,4 @@ exports[`should render ExpenseList with expenses 1`] = `
 </div>
 `;
 
-exports[`should render ExpenseList with no expenses message 1`] = `
-<div>
-  <p>
-    No expenses
-  </p>
-</div>
-`;
+exports[`should render ExpenseList with no expenses message 1`] = `<div />`;
