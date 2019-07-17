@@ -6,13 +6,11 @@ import { getVisibleExpenses } from '../selectors/expenses'
 export const ExpenseList = ({ expenses }) => {
   return (
     <div>
-      {expenses.length === 0 ? (
-        <p>No expenses</p>
-      ) : (
-        expenses.map((expense, i) => (
-          <ExpenseListItem key={expense.id} {...expense} />
-        ))
-      )}
+      {expenses.length === 0
+        ? ''
+        : expenses.map((expense, i) => (
+            <ExpenseListItem key={expense.id} {...expense} />
+          ))}
     </div>
   )
 }
