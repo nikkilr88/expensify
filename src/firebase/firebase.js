@@ -2,13 +2,13 @@ import * as firebase from 'firebase'
 import expenses from '../tests/fixtures/expenses'
 
 const config = {
-  apiKey: 'AIzaSyCP75AQkgSBFj1L3ocSafxGIjXCUdyMIeU',
-  authDomain: 'expensify-31d44.firebaseapp.com',
-  databaseURL: 'https://expensify-31d44.firebaseio.com',
-  projectId: 'expensify-31d44',
-  storageBucket: '',
-  messagingSenderId: '66641670825',
-  appId: '1:66641670825:web:3dc5c943b9e14eac'
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER,
+  appId: process.env.FIREBASE_PROJECT_ID
 }
 
 firebase.initializeApp(config)
