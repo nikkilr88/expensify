@@ -47,5 +47,5 @@ database.ref('expenses').on('value', snapshot => {
     })
   })
 
-  console.log(expensesArr)
+  // console.log(expensesArr)
 })
