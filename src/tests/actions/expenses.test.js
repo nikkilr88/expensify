@@ -4,12 +4,26 @@ import {
   startAddExpense,
   addExpense,
   editExpense,
-  removeExpense
+  removeExpense,
+  setExpenses,
+  startSetExpenses
 } from '../../actions/expenses'
+import expensesReducer from '../../reducers/expenses'
 import expenses from '../fixtures/expenses'
 import database from '../../firebase/firebase'
 
 const createMockStore = configureMockStore([thunk])
+
+beforeEach(done => {
+  const expensesData = {}
+  expenses.forEach(({ id, description, amount, note, createdAt }) => {
+    expensesData[id] = { description, amount, note, createdAt }
+  })
+  database
+    .ref('expenses')
+    .set(expensesData)
+    .then(() => done())
+})
 
 // Test remove expense action
 test('should setup remove expense action object', () => {
@@ -102,17 +116,36 @@ test('Should add expense with default values and store', done => {
     })
 })
 
-// test('should setup add expense action object with default values', () => {
-//   const action = addExpense()
+test('should setup set expense action object', () => {
+  const action = setExpenses(expenses)
+  expect(action).toEqual({
+    type: 'SET_EXPENSES',
+    expenses
+  })
+})
 
-//   expect(action).toEqual({
-//     type: 'ADD_EXPENSE',
-//     expense: {
-//       description: '',
-//       note: '',
-//       amount: 0,
-//       createdAt: 0,
-//       id: expect.any(String)
-//     }
-//   })
-// })
+test('should set expenses', () => {
+  const action = {
+    type: 'SET_EXPENSES',
+    expenses: [expenses[0]]
+  }
+
+  const state = expensesReducer(expenses, action)
+
+  expect(state).toEqual([expenses[0]])
+})
+
+test('should fetch expenses from firebase', () => {
+  const store = createMockStore({})
+
+  store.dispatch(startSetExpenses()).then(() => {
+    const actions = store.getActions()
+
+    expect(actions[0]).toEqual({
+      type: 'SET_EXPENSES',
+      expenses
+    })
+
+    done()
+  })
+})
