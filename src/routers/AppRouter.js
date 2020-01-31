@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom'
 
-import App from '../components/App'
+import LoginPage from '../components/LoginPage'
 import ExpenseDashboard from '../components/ExpenseDashboard'
 import AddExpense from '../components/AddExpense'
 import EditExpense from '../components/EditExpense'
@@ -14,7 +14,7 @@ const AppRouter = () => (
     <div>
       <Header />
       <Switch>
-        <Route path="/" component={App} exact={true} />
+        <Route path="/" component={LoginPage} exact={true} />
         <Route path="/dashboard" component={ExpenseDashboard} />
         <Route path="/create" component={AddExpense} />
         <Route path="/edit/:id" component={EditExpense} />
