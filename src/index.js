@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import configureStore from './store/configureStore'
 import { startSetExpenses } from './actions/expenses'
-import { setTextFilter } from './actions/filters'
-import getVisibleExpenses from './selectors/expenses'
+import { login, logout } from './actions/auth'
 import AppRouter, { history } from './routers/AppRouter'
 
 import 'normalize.css/normalize.css'
@@ -32,6 +31,7 @@ const renderApp = () => {
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
+    store.dispatch(login(user.uid))
     store.dispatch(startSetExpenses()).then(() => {
       renderApp()
       if (history.location.pathname === '/') {
@@ -40,6 +40,7 @@ firebase.auth().onAuthStateChanged(user => {
     })
   } else {
     renderApp()
+    store.dispatch(logout())
     history.push('/')
   }
 })
