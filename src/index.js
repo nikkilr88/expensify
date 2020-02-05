@@ -5,7 +5,7 @@ import configureStore from './store/configureStore'
 import { startSetExpenses } from './actions/expenses'
 import { setTextFilter } from './actions/filters'
 import getVisibleExpenses from './selectors/expenses'
-import AppRouter from './routers/AppRouter'
+import AppRouter, { history } from './routers/AppRouter'
 
 import 'normalize.css/normalize.css'
 import './styles/styles.scss'
@@ -20,16 +20,26 @@ const jsx = (
   </Provider>
 )
 
-ReactDOM.render(<p>Loading...</p>, document.getElementById('root'))
+let hasRendered = false
 
-store
-  .dispatch(startSetExpenses())
-  .then(() => ReactDOM.render(jsx, document.getElementById('root')))
+const renderApp = () => {
+  if (!hasRendered) {
+    ReactDOM.render(jsx, document.getElementById('root'))
+
+    hasRendered = true
+  }
+}
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
-    return console.log('log in')
+    store.dispatch(startSetExpenses()).then(() => {
+      renderApp()
+      if (history.location.pathname === '/') {
+        history.push('/dashboard')
+      }
+    })
+  } else {
+    renderApp()
+    history.push('/')
   }
-
-  console.log('log out')
 })
